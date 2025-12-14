@@ -5,13 +5,7 @@ import android.net.Uri
 import android.provider.Settings
 import androidx.activity.ComponentActivity
 
-/**
- * Extension functions for PermissionKit to handle common scenarios.
- */
 
-/**
- * Opens the app settings page where user can manually grant permissions.
- */
 fun ComponentActivity.openAppSettings() {
     val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
         data = Uri.fromParts("package", packageName, null)
@@ -20,9 +14,6 @@ fun ComponentActivity.openAppSettings() {
     startActivity(intent)
 }
 
-/**
- * Request camera permission with sensible defaults.
- */
 fun ComponentActivity.requestCameraPermission(
     onGranted: () -> Unit,
     onDenied: (() -> Unit)? = null,
@@ -40,9 +31,7 @@ fun ComponentActivity.requestCameraPermission(
     }
 }
 
-/**
- * Request location permissions with sensible defaults.
- */
+
 fun ComponentActivity.requestLocationPermission(
     onGranted: () -> Unit,
     onDenied: (() -> Unit)? = null,
@@ -60,9 +49,7 @@ fun ComponentActivity.requestLocationPermission(
     }
 }
 
-/**
- * Request storage permissions with sensible defaults.
- */
+
 fun ComponentActivity.requestStoragePermission(
     onGranted: () -> Unit,
     onDenied: (() -> Unit)? = null,
