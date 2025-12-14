@@ -4,28 +4,13 @@ import android.content.pm.PackageManager
 import androidx.activity.ComponentActivity
 import androidx.core.content.ContextCompat
 
-/**
- * PermissionKit - A clean, simple API for handling runtime permissions in Android.
- *
- * Usage:
- * ```kotlin
- * PermissionKit.request(this, Manifest.permission.CAMERA) {
- *     granted { openCamera() }
- *     denied { showError() }
- *     deniedPermanently { openSettings() }
- * }
- * ```
- */
+
 object PermissionKit {
 
     private val launcherMap = mutableMapOf<ComponentActivity, PermissionLauncher>()
     private val multipleLauncherMap = mutableMapOf<ComponentActivity, MultiplePermissionLauncher>()
 
-    /**
-     * Initialize PermissionKit for an activity. This should be called in onCreate() before any permission requests.
-     *
-     * @param activity The ComponentActivity that will request permissions
-     */
+  
     fun init(activity: ComponentActivity) {
         if (!launcherMap.containsKey(activity)) {
             launcherMap[activity] = PermissionLauncher(activity)
@@ -33,13 +18,7 @@ object PermissionKit {
         }
     }
 
-    /**
-     * Request a single permission with callback handling.
-     *
-     * @param activity The ComponentActivity requesting the permission
-     * @param permission The permission to request (e.g., Manifest.permission.CAMERA)
-     * @param block DSL block to configure permission callbacks
-     */
+
     fun request(
         activity: ComponentActivity,
         permission: String,
@@ -76,35 +55,17 @@ object PermissionKit {
         }
     }
 
-    /**
-     * Check if a permission is currently granted.
-     *
-     * @param activity The activity context
-     * @param permission The permission to check
-     * @return true if permission is granted, false otherwise
-     */
+  
     fun isPermissionGranted(activity: ComponentActivity, permission: String): Boolean {
         return ContextCompat.checkSelfPermission(activity, permission) == PackageManager.PERMISSION_GRANTED
     }
 
-    /**
-     * Check if multiple permissions are granted.
-     *
-     * @param activity The activity context
-     * @param permissions List of permissions to check
-     * @return true if ALL permissions are granted, false otherwise
-     */
+
     fun arePermissionsGranted(activity: ComponentActivity, vararg permissions: String): Boolean {
         return permissions.all { isPermissionGranted(activity, it) }
     }
 
-    /**
-     * Request multiple permissions at once.
-     *
-     * @param activity The ComponentActivity requesting the permissions
-     * @param permissions Array of permissions to request
-     * @param block DSL block to configure permission callbacks
-     */
+
     fun requestMultiple(
         activity: ComponentActivity,
         vararg permissions: String,
@@ -149,12 +110,7 @@ object PermissionKit {
         }
     }
 
-    /**
-     * Clean up resources for an activity (call in onDestroy if needed).
-     * Note: This is typically not needed as Activity Result API handles lifecycle automatically.
-     *
-     * @param activity The activity to clean up
-     */
+
     fun cleanup(activity: ComponentActivity) {
         launcherMap.remove(activity)
         multipleLauncherMap.remove(activity)
